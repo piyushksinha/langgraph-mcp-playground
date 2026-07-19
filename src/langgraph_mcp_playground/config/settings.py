@@ -36,6 +36,9 @@ class Settings(BaseSettings):
         alias="STORAGE_MCP_PORT",
     )
 
+    # Upload
+    upload_mcp_host: str = "0.0.0.0"
+    upload_mcp_port: int = 8002
 
     @property
     def database_url(self) -> str:

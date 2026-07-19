@@ -118,6 +118,13 @@ services:
 
     restart: unless-stopped
 
+#  upload-mcp:
+#    build: .
+#    command: python -m langgraph_mcp_playground.upload.server
+#    depends_on:
+#      - postgres
+#      - minio
+
 networks:
   playground:
     driver: bridge

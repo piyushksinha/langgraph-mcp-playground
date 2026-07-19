@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from io import BytesIO
 
-from minio.error import S3Error
+#from minio.error import S3Error
 
 from langgraph_mcp_playground.config.settings import get_settings
 from langgraph_mcp_playground.storage.client import get_minio_client
@@ -74,6 +74,9 @@ class StorageService:
             self._bucket,
             object_key,
         )
+
+        assert stat.size is not None
+        assert stat.etag is not None
 
         return ObjectMetadata(
             bucket=self._bucket,
