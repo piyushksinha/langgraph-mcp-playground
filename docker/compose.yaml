@@ -82,6 +82,42 @@ services:
     networks:
       - playground
 
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio
+    restart: unless-stopped
+
+    command: server /data --console-address ":9001"
+
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+
+    ports:
+      - "${MINIO_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:9001"
+
+    volumes:
+      - minio_data:/data
+
+    networks:
+      - playground
+
+  inspector:
+    image: ghcr.io/modelcontextprotocol/inspector:latest
+    container_name: mcp-inspector
+
+    ports:
+      - "6274:6274"
+      - "6277:6277"
+
+    environment:
+      HOST: 0.0.0.0
+      MCP_AUTO_OPEN_ENABLED: "false"
+      DANGEROUSLY_OMIT_AUTH: "true"
+
+    restart: unless-stopped
+
 networks:
   playground:
     driver: bridge
@@ -92,3 +128,4 @@ volumes:
   redis_data:
   chroma_data:
   ollama_data:
+  minio_data:
