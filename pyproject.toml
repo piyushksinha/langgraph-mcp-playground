@@ -7,7 +7,24 @@ authors = [
     { name = "Piyush Sinha", email = "piyush_sinha89@hotmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "alembic>=1.18.5",
+    "chromadb>=1.5.9",
+    "fastmcp>=3.4.4",
+    "httpx>=0.28.1",
+    "langchain>=1.3.14",
+    "langchain-community>=0.4.2",
+    "langchain-mcp-adapters>=0.3.0",
+    "langfuse>=4.14.0",
+    "langgraph>=1.2.9",
+    "psycopg[binary]>=3.3.4",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.2",
+    "python-dotenv>=1.2.2",
+    "redis>=8.0.1",
+    "sqlalchemy>=2.0.51",
+    "structlog>=26.1.0",
+]
 
 [project.scripts]
 langgraph-mcp-playground = "langgraph_mcp_playground:main"
@@ -15,3 +32,10 @@ langgraph-mcp-playground = "langgraph_mcp_playground:main"
 [build-system]
 requires = ["uv_build>=0.11.29,<0.12.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.0",
+    "pytest>=9.1.1",
+    "ruff>=0.15.22",
+]
