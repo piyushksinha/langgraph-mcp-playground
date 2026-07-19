@@ -1,0 +1,94 @@
+services:
+
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: agent
+      POSTGRES_PASSWORD: agentpassword
+      POSTGRES_DB: agentdb
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    networks:
+      - playground
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: unless-stopped
+
+    depends_on:
+      - postgres
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+
+    ports:
+      - "5050:80"
+
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+    networks:
+      - playground
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+
+    ports:
+      - "6380:6379"
+
+    volumes:
+      - redis_data:/data
+
+    networks:
+      - playground
+
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: chromadb
+    restart: unless-stopped
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - chroma_data:/chroma/chroma
+
+    networks:
+      - playground
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+
+    ports:
+      - "11434:11434"
+
+    volumes:
+      - ollama_data:/root/.ollama
+
+    networks:
+      - playground
+
+networks:
+  playground:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  redis_data:
+  chroma_data:
+  ollama_data:
